@@ -42,6 +42,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'isbn'=> 'required|string|max:255',
             'author_id' => 'required',
             'category_id' => 'required'
         ]);
@@ -52,6 +53,7 @@ class BookController extends Controller
         $book = Book::create([
             'title' => $request->title,
             'description' => $request->description,
+            'isbn' => $request->isbn,
             'author_id' => $request->author_id,
             'category_id' => $request->category_id,
             'user_id' => Auth::user()->id
@@ -94,6 +96,7 @@ class BookController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'isbn' => 'required|string|max:255',
             'author_id' => 'required',
             'category_id' => 'required'
         ]);
@@ -101,8 +104,9 @@ class BookController extends Controller
         if ($validator->fails())
             return response()->json($validator->errors());
 
-        $book->title = $request->title;
+        $book->title = $request->title;   $book->description = $request->description;
         $book->description = $request->description;
+        $book->isbn = $request->isbn;
         $book->author_id = $request->author_id;
         $book->category_id = $request->category_id;
         $book->user_id = Auth::user()->id;
